@@ -64,7 +64,7 @@ export default function ConfettiEndingScreen({ onRestart }: ConfettiEndingScreen
         transition={{ delay: 0.6 }}
         className="mb-6 font-[family-name:var(--font-playfair)] text-3xl text-white sm:text-5xl"
       >
-        Fariha 🎂
+        Farihai❤️ 🎂
       </motion.h2>
 
       <motion.p

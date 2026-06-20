@@ -66,7 +66,7 @@ export default function GiftBoxScreen({ onNext }: GiftBoxScreenProps) {
         transition={{ delay: 0.6 }}
         className="gold-text-gradient mb-4 text-center font-[family-name:var(--font-playfair)] text-3xl font-light sm:text-5xl"
       >
-        For Fariha
+        For Farihai❤️
       </motion.h1>
 
       <motion.p

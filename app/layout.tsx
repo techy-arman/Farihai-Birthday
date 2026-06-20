@@ -16,11 +16,11 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Happy Birthday Fariha ✨",
+  title: "Happy Birthday Farihai ✨",
   description:
-    "A magical birthday journey made with love for Fariha — June 23. Shayari, memories, and wishes from the heart.",
+    "A magical birthday journey made with love for Farihai — June 23. Shayari, memories, and wishes from the heart.",
   openGraph: {
-    title: "Happy Birthday Fariha ✨",
+    title: "Happy Birthday Farihai ✨",
     description: "A special interactive birthday experience made just for you.",
     type: "website",
   },

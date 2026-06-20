@@ -43,7 +43,7 @@ export default function FinalSurpriseScreen({ onNext }: FinalSurpriseScreenProps
         transition={{ delay: 0.3, duration: 0.8 }}
         className="mb-2 max-w-lg text-center text-xl text-white/80 sm:text-2xl"
       >
-        Fariha, you make the world a more beautiful place.
+        Farihai❤️, you make the world a more beautiful place.
       </motion.p>
 
       <motion.p

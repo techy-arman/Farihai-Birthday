@@ -46,7 +46,7 @@ export default function BirthdayRevealScreen({ onNext }: BirthdayRevealScreenPro
         transition={{ delay: 1.4, duration: 0.8 }}
         className="mb-2 font-[family-name:var(--font-playfair)] text-4xl font-light text-white sm:text-6xl md:text-7xl"
       >
-        Fariha
+        Farihai❤️
       </motion.h2>
 
       <motion.div
