@@ -4,7 +4,6 @@ import { AnimatePresence } from "framer-motion";
 import { useCallback, useState } from "react";
 import StarsBackground from "@/components/background/StarsBackground";
 import FloatingParticles from "@/components/background/FloatingParticles";
-import ProgressDots from "@/components/ui/ProgressDots";
 import BirthdayRevealScreen from "@/components/journey/screens/BirthdayRevealScreen";
 import BirthdayLetterScreen from "@/components/journey/screens/BirthdayLetterScreen";
 import ConfettiEndingScreen from "@/components/journey/screens/ConfettiEndingScreen";
@@ -29,10 +28,7 @@ export default function JourneyExperience({ content }: JourneyExperienceProps) {
 
   const [photoBatch1, photoBatch2, photoBatch3] = content.photoBatches;
 
-  const shayari1 = content.shayari[0] ? [content.shayari[0]] : [];
-  const shayari2 = content.shayari.slice(1, 3);
-  const moonShayari = content.shayari[3];
-  const wishesShayari = content.shayari[4];
+  const [shayari1, shayari2, shayari3, moonShayari, wishesShayari] = content.shayari;
 
   const goNext = useCallback(() => {
     setStepIndex((i) => Math.min(i + 1, JOURNEY_STEPS.length - 1));
@@ -78,6 +74,17 @@ export default function JourneyExperience({ content }: JourneyExperienceProps) {
       case "more-photos":
         return <MorePhotosScreen photos={photoBatch2} onNext={goNext} />;
 
+      case "shayari-3":
+        return (
+          <ShayariScreen
+            stepKey="shayari-3"
+            shayari={shayari3}
+            title="A Little More"
+            subtitle="Because one poem was never enough"
+            onNext={goNext}
+          />
+        );
+
       case "moon":
         return <MoonSectionScreen shayari={moonShayari} onNext={goNext} />;
 
@@ -116,8 +123,6 @@ export default function JourneyExperience({ content }: JourneyExperienceProps) {
       <div className="relative z-10 h-full w-full">
         <AnimatePresence mode="wait">{renderScreen()}</AnimatePresence>
       </div>
-
-      {currentStep !== "confetti" && <ProgressDots currentStep={currentStep} />}
     </div>
   );
 }

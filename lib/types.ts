@@ -5,6 +5,7 @@ export type JourneyStep =
   | "photo-memories"
   | "shayari-2"
   | "more-photos"
+  | "shayari-3"
   | "moon"
   | "memory-album"
   | "letter"
@@ -38,6 +39,7 @@ export const JOURNEY_STEPS: JourneyStep[] = [
   "photo-memories",
   "shayari-2",
   "more-photos",
+  "shayari-3",
   "moon",
   "memory-album",
   "letter",
@@ -53,6 +55,7 @@ export const STEP_LABELS: Record<JourneyStep, string> = {
   "photo-memories": "Precious Memories",
   "shayari-2": "Poetry for You",
   "more-photos": "More Moments",
+  "shayari-3": "More Words",
   moon: "Under the Moon",
   "memory-album": "Our Album",
   letter: "A Letter for You",

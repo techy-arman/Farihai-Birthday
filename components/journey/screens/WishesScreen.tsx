@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Heart, Sparkles, Star } from "lucide-react";
+import { useEffect, useState } from "react";
 import GlassCard from "@/components/ui/GlassCard";
 import GoldButton from "@/components/ui/GoldButton";
 import ScreenWrapper from "@/components/ui/ScreenWrapper";
@@ -19,9 +20,34 @@ const wishes = [
   { icon: Sparkles, text: "May you always shine bright" },
 ];
 
+const LINE_PAUSE_MS = 1400;
+
 export default function WishesScreen({ shayari, onNext }: WishesScreenProps) {
+  const [lineIndex, setLineIndex] = useState(0);
+  const [typingDone, setTypingDone] = useState(false);
+  const [shayariDone, setShayariDone] = useState(!shayari);
+
+  const allLines = shayari?.lines ?? [];
+  const currentLine = allLines[lineIndex] ?? "";
+  const isLastLine = lineIndex >= allLines.length - 1;
+
+  useEffect(() => {
+    if (!shayari || !typingDone) return;
+
+    const timer = setTimeout(() => {
+      if (!isLastLine) {
+        setLineIndex((i) => i + 1);
+        setTypingDone(false);
+      } else {
+        setShayariDone(true);
+      }
+    }, LINE_PAUSE_MS);
+
+    return () => clearTimeout(timer);
+  }, [shayari, typingDone, isLastLine, lineIndex]);
+
   return (
-    <ScreenWrapper stepKey="wishes">
+    <ScreenWrapper stepKey="wishes" className="justify-start overflow-y-auto pt-10 pb-10 sm:pt-14">
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -34,12 +60,12 @@ export default function WishesScreen({ shayari, onNext }: WishesScreenProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="mb-8 font-[family-name:var(--font-playfair)] text-2xl text-white sm:text-4xl"
+        className="mb-6 font-[family-name:var(--font-playfair)] text-2xl text-white sm:mb-8 sm:text-4xl"
       >
         My Wishes for You
       </motion.h2>
 
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:gap-6">
+      <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:gap-6">
         {wishes.map(({ icon: Icon, text }, i) => (
           <GlassCard
             key={text}
@@ -55,35 +81,50 @@ export default function WishesScreen({ shayari, onNext }: WishesScreenProps) {
       </div>
 
       {shayari && (
-        <GlassCard className="max-w-xl px-8 py-8" delay={0.8}>
-          <div className="space-y-3">
-            {shayari.lines.map((line, i) => (
+        <GlassCard className="max-w-xl px-6 py-8 sm:px-8" delay={0.8}>
+          <div className="min-h-[80px]">
+            {allLines.slice(0, lineIndex).map((line, i) => (
               <motion.p
-                key={i}
+                key={`done-${i}`}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 + i * 0.4 }}
-                className="text-center font-[family-name:var(--font-cormorant)] text-lg text-white/90 sm:text-xl"
+                animate={{ opacity: 0.7 }}
+                className="mb-3 text-center font-[family-name:var(--font-cormorant)] text-lg leading-relaxed text-white/70 sm:text-xl"
               >
-                {i === 0 ? (
-                  <TypewriterText text={line} speed={40} startDelay={1000} />
-                ) : (
-                  line
-                )}
+                {line}
               </motion.p>
             ))}
+
+            {lineIndex < allLines.length && (
+              <motion.p
+                key={lineIndex}
+                className="text-center font-[family-name:var(--font-cormorant)] text-lg leading-relaxed text-white sm:text-xl"
+              >
+                {typingDone ? (
+                  currentLine
+                ) : (
+                  <TypewriterText
+                    text={currentLine}
+                    speed={40}
+                    startDelay={600}
+                    onComplete={() => setTypingDone(true)}
+                  />
+                )}
+              </motion.p>
+            )}
           </div>
         </GlassCard>
       )}
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.5 }}
-        className="mt-8"
-      >
-        <GoldButton onClick={onNext}>One Last Surprise</GoldButton>
-      </motion.div>
+      {shayariDone && (
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mt-8"
+        >
+          <GoldButton onClick={onNext}>Continue</GoldButton>
+        </motion.div>
+      )}
     </ScreenWrapper>
   );
 }

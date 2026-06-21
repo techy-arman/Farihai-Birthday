@@ -6,14 +6,14 @@ import GlassCard from "@/components/ui/GlassCard";
 import GoldButton from "@/components/ui/GoldButton";
 import ScreenWrapper from "@/components/ui/ScreenWrapper";
 import TypewriterText from "@/components/ui/TypewriterText";
-import type { ShayariItem } from "@/lib/types";
+import type { JourneyStep, ShayariItem } from "@/lib/types";
 
 interface ShayariScreenProps {
-  shayari: ShayariItem[];
+  shayari?: ShayariItem;
   title?: string;
   subtitle?: string;
   onNext: () => void;
-  stepKey: "shayari-1" | "shayari-2";
+  stepKey: Extract<JourneyStep, "shayari-1" | "shayari-2" | "shayari-3">;
 }
 
 const LINE_PAUSE_MS = 1400;
@@ -29,7 +29,7 @@ export default function ShayariScreen({
   const [typingDone, setTypingDone] = useState(false);
   const [allDone, setAllDone] = useState(false);
 
-  const allLines = shayari.flatMap((s) => s.lines);
+  const allLines = shayari?.lines ?? [];
   const currentLine = allLines[lineIndex] ?? "";
   const isLastLine = lineIndex >= allLines.length - 1;
 
@@ -98,22 +98,6 @@ export default function ShayariScreen({
               )}
             </motion.p>
           )}
-        </div>
-
-        <div className="mt-6 flex justify-center gap-1">
-          {allLines.map((_, i) => (
-            <div
-              key={i}
-              className="h-1 rounded-full transition-all duration-300"
-              style={{
-                width: i === lineIndex ? 24 : 6,
-                background:
-                  i <= lineIndex
-                    ? "rgba(212, 175, 55, 0.8)"
-                    : "rgba(255, 255, 255, 0.15)",
-              }}
-            />
-          ))}
         </div>
       </GlassCard>
 
